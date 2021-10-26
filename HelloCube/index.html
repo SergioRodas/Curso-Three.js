@@ -29,9 +29,11 @@
             2000 //Default parameter
         );
         
-        let newCamera = new THREE.PerspectiveCamera(
-            75,
-            window.innerWidth/window.innerHeight,
+        let newCamera = new THREE.OrthographicCamera(
+            5,
+            -5,
+            5,
+            -5,
             3, //near
             10 //far
         );
