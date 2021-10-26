@@ -14,6 +14,13 @@
         let scene = new THREE.Scene();
         scene.background = new THREE.Color(0x2a3b4c);
 
+        // scene.fog = new THREE.Fog(0x76456, 0.1, 8)
+
+        let loader = new THREE.TextureLoader();
+        loader.load('./background.jpg', function(texture) {
+            scene.background = texture
+        })
+
         // add camera
         let camera = new THREE.PerspectiveCamera(
             75,
@@ -27,7 +34,11 @@
 
         //add geometry
         let geometry = new THREE.BoxGeometry();
-        let material = new THREE.MeshBasicMaterial({color:0x00ff00, wireframe: true});
+        let material = new THREE.MeshBasicMaterial({
+            color: 'crimson',
+            wireframe: true
+        });
+
         let cube = new THREE.Mesh(geometry, material);
 
         scene.add(cube);
