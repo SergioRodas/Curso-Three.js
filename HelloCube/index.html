@@ -12,20 +12,33 @@
     <script>
         // creating scene
         let scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x2a3b4c);
+        // scene.background = new THREE.Color(0x2a3b4c);
 
-        // scene.fog = new THREE.Fog(0x76456, 0.1, 8)
+        // // scene.fog = new THREE.Fog(0x76456, 0.1, 8)
 
-        let loader = new THREE.TextureLoader();
-        loader.load('./background.jpg', function(texture) {
-            scene.background = texture
-        })
+        // let loader = new THREE.TextureLoader();
+        // loader.load('./background.jpg', function(texture) {
+        //     scene.background = texture
+        // })
 
         // add camera
         let camera = new THREE.PerspectiveCamera(
             75,
-            window.innerWidth/window.innerHeight
+            window.innerWidth/window.innerHeight,
+            0.1, //Default parameter
+            2000 //Default parameter
         );
+        
+        let newCamera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth/window.innerHeight,
+            3, //near
+            10 //far
+        );
+
+        let helper = new THREE.CameraHelper(newCamera)
+
+        scene.add(helper)
 
         // renderer
         let renderer = new THREE.WebGLRenderer();
@@ -40,16 +53,27 @@
         });
 
         let cube = new THREE.Mesh(geometry, material);
+        cube.position.z = -5;
 
         scene.add(cube);
 
-        camera.position.z = 5;
+        // camera.position.z = 5;
 
         // animation
+        let i = 0;
+
         let animate = function() {
             requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
+
+            camera.lookAt(newCamera.position)
+
+            camera.position.x = Math.cos(i) * 30
+            camera.position.z = Math.sin(i) * 30
+
+            i+= 0.01;
+
+            // cube.rotation.x += 0.01;
+            // cube.rotation.y += 0.01;
 
             renderer.render(scene, camera);
         }
